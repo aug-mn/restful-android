@@ -73,5 +73,4 @@ public class GetCatPictureCommentsRestMethod extends AbstractRestMethod<Comments
 	public URI getURI() {
 		return mUri;
 	}
-
 }

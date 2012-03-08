@@ -62,6 +62,8 @@ public class CommentActivity extends Activity {
 
 		catPictureId = getIntent().getStringExtra(EXTRA_CAT_PICTURE_ID);
 
+		this.requestReceiver = new CatPicturesReceiver();
+		
 		initPostFields();
 		initComments();
 		
@@ -99,6 +101,7 @@ public class CommentActivity extends Activity {
 
 	private void initComments(){
 
+		
 		// GET EXISTING COMMENTS TO INIT LIST
 		String whereClause = CommentsTable.CAT_PICTURE_ID + "=?";
 		String[] whereValues = {this.catPictureId};
@@ -136,7 +139,7 @@ public class CommentActivity extends Activity {
 		mCatPicturesServiceHelper = new CatPicturesServiceHelper(this);
 
 		if (requestId == null) {
-			requestId = mCatPicturesServiceHelper.getCatPictures();
+			requestId = mCatPicturesServiceHelper.getComments(catPictureId);
 			// show progress spinner
 			setProgressBarIndeterminateVisibility(true);
 		} else if (mCatPicturesServiceHelper.isRequestPending(requestId)) {

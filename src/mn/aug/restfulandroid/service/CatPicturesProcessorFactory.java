@@ -1,20 +1,26 @@
 package mn.aug.restfulandroid.service;
 
 import android.content.Context;
-
-
+import mn.aug.restfulandroid.service.CatPicturesService;
 
 public class CatPicturesProcessorFactory {
 
 	private static CatPicturesProcessorFactory mSingleton;
-	private ResourceProcessor mProcessor;
+	private Context mContext;
+	private ResourceProcessor mDefaultProcessor;
 
 	public void setDefaultProcessor(ResourceProcessor processor) {
-		mProcessor = processor;
+		mDefaultProcessor = processor;
 	}
 
-	public ResourceProcessor getProcessor() {
-		return mProcessor;
+	public ResourceProcessor getProcessor(int resourceType) {
+		switch (resourceType) {
+		case CatPicturesService.RESOURCE_TYPE_CAT_PICTURES:
+			return new CatPicturesProcessor(mContext);
+		case CatPicturesService.RESOURCE_TYPE_COMMENTS:
+			return new CatPictureCommentsProcessor(mContext);
+		}
+		return mDefaultProcessor;
 	}
 
 	public static CatPicturesProcessorFactory getInstance(Context context) {
@@ -25,7 +31,8 @@ public class CatPicturesProcessorFactory {
 	}
 	
 	private CatPicturesProcessorFactory(Context context) {
-		mProcessor = new CatPicturesProcessor(context);
+		mContext = context;
+		mDefaultProcessor = new CatPicturesProcessor(mContext);
 	};
 
 }

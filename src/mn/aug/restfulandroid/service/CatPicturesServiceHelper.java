@@ -74,7 +74,7 @@ public class CatPicturesServiceHelper {
 	public long getComments(String catPictureId) {
 
 		long requestId = generateRequestID();
-		synchronized (pendingRequestsLock) {			
+		synchronized (pendingRequestsLock) {
 			pendingRequests.add(requestId);
 		}
 
